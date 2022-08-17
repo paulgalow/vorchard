@@ -1,7 +1,5 @@
-import adapter from "@sveltejs/adapter-static";
+import adapter from "@sveltejs/adapter-auto";
 import preprocess from "svelte-preprocess";
-
-const dev = process.env.NODE_ENV === "development";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -12,19 +10,10 @@ const config = {
   }),
   kit: {
     adapter: adapter({
-      pages: "build",
-      assets: "build",
-      fallback: "index.html",
-      precompress: false,
+      edge: false,
+      external: [],
+      split: false,
     }),
-    prerender: {
-      // This can be false if you're using a fallback (i.e. SPA mode)
-      default: false,
-    },
-    paths: {
-      base: "",
-      // base: dev ? "" : "/vpn-config-generator",
-    },
   },
 };
 
