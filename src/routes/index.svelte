@@ -137,7 +137,7 @@
                 class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               >
                 <option value="ikev2">IPSec IKEv2</option>
-                <option value="wireguard">WireGuard</option>
+                <option value="wireguard" disabled>WireGuard</option>
               </select>
             </div>
 
@@ -153,8 +153,8 @@
                 id="auth-method"
                 class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               >
-                <option value="eap-mschapv2">EAP-MSCHAPV2</option>
-                <option value="mutual-rsa">Mutual RSA</option>
+                <option value="eap-mschapv2">EAP-MSCHAPv2</option>
+                <option value="mutual-rsa" disabled>Mutual RSA</option>
               </select>
             </div>
 
