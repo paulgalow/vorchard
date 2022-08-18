@@ -220,7 +220,7 @@
                 id="author"
                 minlength="1"
                 maxlength="100"
-                pattern="^[\p&#123;L&#125;\d\._-!\?| ]+$"
+                pattern="^[\p&#123;L&#125;\d\-.?_!| ]+$"
                 inputmode="text"
                 value={author}
                 placeholder="Example Company"
