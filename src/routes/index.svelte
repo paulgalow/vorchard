@@ -88,7 +88,7 @@
   <div
     class="min-h-screen grid place-items-center bg-gradient-to-r from-orange-400 to-orange-300"
   >
-    <div class="w-11/12 max-w-xl">
+    <div class="w-11/12 max-w-xl py-8">
       <form
         on:submit|preventDefault={onSubmit}
         bind:this={formEl}
