@@ -3,6 +3,7 @@
   import { downloadFile } from "$lib/utils/files";
   import { createAuthName, createPassword } from "$lib/utils/strings";
   import Logo from "$lib/Logo.svelte";
+  import Footer from "$lib/Footer.svelte";
   import renderTemplate from "$lib/templates/profile-eap-mschapv2";
 
   const SITE_NAME = "Vorchard";
@@ -97,8 +98,8 @@
           <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
             <div>
               <div class="inline-flex justify-center items-center pt-1">
-                <Logo className="block h-12 w-12 mr-3" />
-                <h1 class="font-semibold text-4xl text-green-700">
+                <Logo className="block h-10 w-10 mr-3" />
+                <h1 class="font-semibold text-3xl text-green-700">
                   {SITE_NAME}
                 </h1>
               </div>
@@ -229,7 +230,7 @@
               />
             </div>
 
-            <!-- Profile ID -->
+            <!-- Profile ID prefix -->
             <div>
               <label
                 for="prefix"
@@ -403,6 +404,7 @@
           </div>
         </div>
       </form>
+      <Footer />
     </div>
   </div>
 </main>
