@@ -2,7 +2,7 @@
   on:click={() => window.location.reload()}
   type="button"
   class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-  aria-label="Reload page"
+  title="Copy URL"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
