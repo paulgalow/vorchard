@@ -1,12 +1,12 @@
-// prettier-ignore
-const uuid = () => self.crypto.randomUUID();
+import { createUuid } from "../utils/strings";
+
 const formatString = (str: string, indentSpaces: number) =>
   str.match(/.{1,70}/g)?.join("\n" + " ".repeat(indentSpaces));
 
 // prettier-ignore
 const renderTemplate = (username: string, certBundlePassword: string, userCertificate: string, server: string, connectionName: string, author: string, id: string) => {
-  const userCertPayloadUuid = uuid();
-  const ikeV2PayloadUuid = uuid();
+  const userCertPayloadUuid = createUuid();
+  const ikeV2PayloadUuid = createUuid();
   const formattedCertString = formatString(userCertificate, 10);
 
   return `
@@ -130,7 +130,7 @@ const renderTemplate = (username: string, certBundlePassword: string, userCertif
     <key>PayloadDisplayName</key>
     <string>VPN IPSec</string>
     <key>PayloadIdentifier</key>
-    <string>${id}.${username}.${uuid()}</string>
+    <string>${id}.${username}.${createUuid()}</string>
     <key>PayloadOrganization</key>
     <string>${author}</string>
     <key>PayloadRemovalDisallowed</key>
@@ -138,7 +138,7 @@ const renderTemplate = (username: string, certBundlePassword: string, userCertif
     <key>PayloadType</key>
     <string>Configuration</string>
     <key>PayloadUUID</key>
-    <string>${uuid()}</string>
+    <string>${createUuid()}</string>
     <key>PayloadVersion</key>
     <integer>1</integer>
   </dict>

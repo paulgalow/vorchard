@@ -6,10 +6,14 @@ interface PasswordOptions {
   withUnderscore?: boolean;
 }
 
+function createUuid() {
+  return crypto.randomUUID();
+}
+
 function createRandomIndex(max = 24) {
   for (;;) {
     const arr = new Uint8Array(1);
-    const num = self.crypto.getRandomValues(arr)[0];
+    const num = crypto.getRandomValues(arr)[0];
     if (num <= max) return num;
   }
 }
@@ -63,4 +67,4 @@ function createPassword({
   }
 }
 
-export { createAuthName, createPassword };
+export { createUuid, createAuthName, createPassword };

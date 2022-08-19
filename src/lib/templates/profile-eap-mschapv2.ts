@@ -1,9 +1,8 @@
-// prettier-ignore
-const uuid = () => self.crypto.randomUUID();
+import { createUuid } from "../utils/strings";
 
 // prettier-ignore
 const renderTemplate = (username: string, authName: string, authPassword: string, server: string, connectionName: string, author: string, id: string) => {
-  const ikeV2PayloadUuid = uuid();
+  const ikeV2PayloadUuid = createUuid();
 
   return `
 <?xml version="1.0" encoding="UTF-8"?>
@@ -88,7 +87,7 @@ const renderTemplate = (username: string, authName: string, authPassword: string
     <key>PayloadDisplayName</key>
     <string>VPN IPSec</string>
     <key>PayloadIdentifier</key>
-    <string>${id}.${username}.${uuid()}</string>
+    <string>${id}.${username}.${createUuid()}</string>
     <key>PayloadOrganization</key>
     <string>${author}</string>
     <key>PayloadRemovalDisallowed</key>
@@ -96,7 +95,7 @@ const renderTemplate = (username: string, authName: string, authPassword: string
     <key>PayloadType</key>
     <string>Configuration</string>
     <key>PayloadUUID</key>
-    <string>${uuid()}</string>
+    <string>${createUuid()}</string>
     <key>PayloadVersion</key>
     <integer>1</integer>
   </dict>
