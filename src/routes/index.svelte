@@ -4,6 +4,7 @@
   import { createAuthName, createPassword } from "$lib/utils/strings";
   import Logo from "$lib/Logo.svelte";
   import Footer from "$lib/Footer.svelte";
+  import CopyUrlButton from "$lib/CopyUrlButton.svelte";
   import DownloadButton from "$lib/DownloadButton.svelte";
   import ReloadButton from "$lib/ReloadButton.svelte";
   import renderTemplate from "$lib/templates/profile-eap-mschapv2";
@@ -382,9 +383,12 @@
             {/if}
           </div>
           <div
-            class="flex items-center justify-end space-x-4 px-4 py-4 bg-orange-50 text-right sm:px-6"
+            class="flex items-center justify-center space-x-4 px-4 py-4 bg-orange-50 text-right sm:px-6"
           >
-            <ReloadButton />
+            <div class="mr-auto">
+              <ReloadButton />
+            </div>
+            <CopyUrlButton />
             <DownloadButton title="Download profile" />
           </div>
         </div>
