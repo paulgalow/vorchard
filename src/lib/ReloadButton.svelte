@@ -3,6 +3,7 @@
   type="button"
   class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-stone-700 bg-white  hover:bg-orange-50 border-stone-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
   aria-label="Reload page"
+  title="Reload page"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
