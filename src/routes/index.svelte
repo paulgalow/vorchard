@@ -389,7 +389,7 @@
               <ReloadButton />
             </div>
             <CopyUrlButton />
-            <DownloadButton title="Download profile" />
+            <DownloadButton />
           </div>
         </div>
       </form>
