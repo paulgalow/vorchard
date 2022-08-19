@@ -128,37 +128,38 @@
               />
             </div>
 
-            <!-- VPN protocol -->
-            <div>
-              <label
-                for="vpn-protocol"
-                class="block text-sm font-medium text-gray-700"
-                >VPN protocol</label
-              >
-              <select
-                name="vpn-protocol"
-                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              >
-                <option value="ikev2">IPSec IKEv2</option>
-                <option value="wireguard" disabled>WireGuard</option>
-              </select>
-            </div>
-
-            <!-- Authentication method -->
-            <div>
-              <label
-                for="auth-method"
-                class="block text-sm font-medium text-gray-700"
-                >Authentication method</label
-              >
-              <select
-                name="auth-method"
-                id="auth-method"
-                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              >
-                <option value="eap-mschapv2">EAP-MSCHAPv2</option>
-                <option value="mutual-rsa" disabled>Mutual RSA</option>
-              </select>
+            <div class="flex items-center justify-between space-x-7">
+              <!-- VPN protocol -->
+              <div class="w-1/2">
+                <label
+                  for="vpn-protocol"
+                  class="block text-sm font-medium text-gray-700"
+                  >VPN protocol</label
+                >
+                <select
+                  name="vpn-protocol"
+                  class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                >
+                  <option value="ikev2">IPSec IKEv2</option>
+                  <option value="wireguard" disabled>WireGuard</option>
+                </select>
+              </div>
+              <!-- Authentication method -->
+              <div class="w-1/2">
+                <label
+                  for="auth-method"
+                  class="block text-sm font-medium text-gray-700"
+                  >Authentication method</label
+                >
+                <select
+                  name="auth-method"
+                  id="auth-method"
+                  class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                >
+                  <option value="eap-mschapv2">EAP-MSCHAPv2</option>
+                  <option value="mutual-rsa" disabled>Mutual RSA</option>
+                </select>
+              </div>
             </div>
 
             <!-- Connection Name -->
