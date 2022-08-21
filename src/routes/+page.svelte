@@ -25,7 +25,7 @@
   const author = appParams.get("author") ?? "";
   const idPrefix = appParams.get("prefix") ?? "";
 
-  async function onSubmit(e: SubmitEvent) {
+  function onSubmit(e: SubmitEvent) {
     const formData = new FormData(<HTMLFormElement>e.target);
 
     const username = formData.get("username");
