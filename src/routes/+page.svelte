@@ -6,7 +6,7 @@
   import Footer from "$lib/Footer.svelte";
   import CopyUrlButton from "$lib/CopyUrlButton.svelte";
   import DownloadButton from "$lib/DownloadButton.svelte";
-  import ReloadButton from "$lib/ReloadButton.svelte";
+  import ResetButton from "$lib/ResetButton.svelte";
   import renderTemplate from "$lib/templates/profile-eap-mschapv2";
 
   const SITE_NAME = "Vorchard";
@@ -24,6 +24,12 @@
   const server = appParams.get("server") ?? "";
   const author = appParams.get("author") ?? "";
   const idPrefix = appParams.get("prefix") ?? "";
+
+  function resetForm() {
+    formEl.reset();
+    authName = "";
+    password = "";
+  }
 
   function onSubmit(e: SubmitEvent) {
     const formData = new FormData(<HTMLFormElement>e.target);
@@ -77,7 +83,6 @@
   //     downloadFile(configProfile, username);
   //   }
 
-  //   formEl.reset();
   // }
 </script>
 
@@ -386,7 +391,7 @@
             class="flex items-center justify-center space-x-4 px-4 py-4 bg-orange-50 text-right sm:px-6"
           >
             <div class="mr-auto">
-              <ReloadButton />
+              <ResetButton on:resetform={resetForm} />
             </div>
             <CopyUrlButton />
             <DownloadButton />
