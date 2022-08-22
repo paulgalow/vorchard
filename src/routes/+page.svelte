@@ -7,19 +7,31 @@
   import CopyUrlButton from "$lib/CopyUrlButton.svelte";
   import DownloadButton from "$lib/DownloadButton.svelte";
   import ResetButton from "$lib/ResetButton.svelte";
+  import VpnProtocolOption from "$lib/VpnProtocolOption.svelte";
+  import AuthMethodOption from "$lib/AuthMethodOption.svelte";
   import renderTemplate from "$lib/templates/profile-eap-mschapv2";
 
   const SITE_NAME = "Vorchard";
   const SITE_DESCRIPTION =
     "Create VPN configuration profiles for iOS, iPadOS and macOS devices";
 
+  const VPN_PROTOCOLS: VpnProtocol[] = [
+    { name: "IPSec IKEv2", id: "ikev2", status: "supported" },
+    { name: "WireGuard", id: "wireguard", status: "unsupported" },
+  ];
+
+  const AUTH_METHODS: AuthMethod[] = [
+    { name: "EAP-MSCHAPv2", id: "eap-mschapv2", status: "supported" },
+    { name: "Mutual RSA", id: "mutual-rsa", status: "unsupported" },
+  ];
+
   let formEl: HTMLFormElement;
   let authName: string;
   let password: string;
 
   const appParams = $page.url.searchParams;
-  const vpnProtocol = appParams.get("proto") ?? "";
-  const authMethod = appParams.get("auth") ?? "";
+  const selectedVpnProtocol = appParams.get("proto") ?? "";
+  const selectedAuthMethod = appParams.get("auth") ?? "";
   const connectionName = appParams.get("name") ?? "";
   const server = appParams.get("server") ?? "";
   const author = appParams.get("author") ?? "";
@@ -135,37 +147,8 @@
             </div>
 
             <div class="flex items-center justify-between space-x-7">
-              <!-- VPN protocol -->
-              <div class="w-1/2">
-                <label
-                  for="vpn-protocol"
-                  class="block text-sm font-medium text-gray-700"
-                  >VPN protocol</label
-                >
-                <select
-                  name="vpn-protocol"
-                  class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                >
-                  <option value="ikev2">IPSec IKEv2</option>
-                  <option value="wireguard" disabled>WireGuard</option>
-                </select>
-              </div>
-              <!-- Authentication method -->
-              <div class="w-1/2">
-                <label
-                  for="auth-method"
-                  class="block text-sm font-medium text-gray-700"
-                  >Authentication method</label
-                >
-                <select
-                  name="auth-method"
-                  id="auth-method"
-                  class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                >
-                  <option value="eap-mschapv2">EAP-MSCHAPv2</option>
-                  <option value="mutual-rsa" disabled>Mutual RSA</option>
-                </select>
-              </div>
+              <VpnProtocolOption {VPN_PROTOCOLS} {selectedVpnProtocol} />
+              <AuthMethodOption {AUTH_METHODS} {selectedAuthMethod} />
             </div>
 
             <!-- Connection Name -->
