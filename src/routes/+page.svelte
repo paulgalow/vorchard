@@ -102,139 +102,126 @@
   <title>{SITE_NAME} | {SITE_DESCRIPTION}</title>
 </svelte:head>
 
-<main>
-  <div
-    class="min-h-screen grid place-items-center bg-gradient-to-r from-orange-400 to-orange-300"
-  >
-    <div class="w-11/12 max-w-xl py-8">
-      <form
-        on:submit|preventDefault={onSubmit}
-        bind:this={formEl}
-        method="post"
-      >
-        <div class="shadow-md rounded-md overflow-hidden">
-          <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-            <FormHeader {SITE_NAME} {SITE_DESCRIPTION} />
+<main class="flex justify-center">
+  <div class="sm:w-11/12 max-w-xl pt-8">
+    <form on:submit|preventDefault={onSubmit} bind:this={formEl} method="post">
+      <div class="shadow-md rounded-md overflow-hidden">
+        <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+          <FormHeader {SITE_NAME} {SITE_DESCRIPTION} />
 
-            <!-- Username -->
-            <div>
-              <label
-                for="username"
-                class="block text-sm font-medium text-gray-700">Username</label
-              >
-              <input
-                type="text"
-                name="username"
-                id="username"
-                minlength="3"
-                maxlength="50"
-                pattern="^[a-z|\.]+$"
-                inputmode="text"
-                data-lpignore="true"
-                required
-                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              />
-            </div>
+          <!-- Username -->
+          <div>
+            <label
+              for="username"
+              class="block text-sm font-medium text-gray-700">Username</label
+            >
+            <input
+              type="text"
+              name="username"
+              id="username"
+              minlength="3"
+              maxlength="50"
+              pattern="^[a-z|\.]+$"
+              inputmode="text"
+              data-lpignore="true"
+              required
+              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
 
-            <div class="flex items-center justify-between space-x-7">
-              <VpnProtocolOption {VPN_PROTOCOLS} {selectedVpnProtocol} />
-              <AuthMethodOption {AUTH_METHODS} {selectedAuthMethod} />
-            </div>
+          <div class="flex items-center justify-between space-x-4 sm:space-x-7">
+            <VpnProtocolOption {VPN_PROTOCOLS} {selectedVpnProtocol} />
+            <AuthMethodOption {AUTH_METHODS} {selectedAuthMethod} />
+          </div>
 
-            <!-- Connection Name -->
-            <div>
-              <label
-                for="connection-name"
-                class="block text-sm font-medium text-gray-700"
-                >Connection name</label
-              >
-              <input
-                type="text"
-                name="connection-name"
-                id="connection-name"
-                minlength="1"
-                maxlength="50"
-                pattern="^[\p&#123;L&#125;| ]+$"
-                inputmode="text"
-                value={connectionName}
-                data-lpignore="true"
-                placeholder="Example Company VPN"
-                required
-                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              />
-            </div>
+          <!-- Connection Name -->
+          <div>
+            <label
+              for="connection-name"
+              class="block text-sm font-medium text-gray-700"
+              >Connection name</label
+            >
+            <input
+              type="text"
+              name="connection-name"
+              id="connection-name"
+              minlength="1"
+              maxlength="50"
+              pattern="^[\p&#123;L&#125;| ]+$"
+              inputmode="text"
+              value={connectionName}
+              data-lpignore="true"
+              placeholder="Example Company VPN"
+              required
+              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
 
-            <!-- Server -->
-            <div>
-              <label
-                for="server"
-                class="block text-sm font-medium text-gray-700"
-                >Server host</label
-              >
-              <input
-                type="text"
-                name="server"
-                id="server"
-                minlength="3"
-                maxlength="50"
-                pattern="^([a-z0-9\-._~%]+|\[[a-f0-9:.]+\])$"
-                inputmode="text"
-                value={server}
-                data-lpignore="true"
-                placeholder="vpn.example.com"
-                required
-                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              />
-            </div>
+          <!-- Server -->
+          <div>
+            <label for="server" class="block text-sm font-medium text-gray-700"
+              >Server host</label
+            >
+            <input
+              type="text"
+              name="server"
+              id="server"
+              minlength="3"
+              maxlength="50"
+              pattern="^([a-z0-9\-._~%]+|\[[a-f0-9:.]+\])$"
+              inputmode="text"
+              value={server}
+              data-lpignore="true"
+              placeholder="vpn.example.com"
+              required
+              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
 
-            <!-- Profile author -->
-            <div>
-              <label
-                for="author"
-                class="block text-sm font-medium text-gray-700"
-                >Profile author</label
-              >
-              <input
-                type="text"
-                name="author"
-                id="author"
-                minlength="1"
-                maxlength="100"
-                pattern="^[\p&#123;L&#125;\d\-.?_!| ]+$"
-                inputmode="text"
-                value={author}
-                placeholder="Example Company"
-                data-lpignore="true"
-                required
-                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              />
-            </div>
+          <!-- Profile author -->
+          <div>
+            <label for="author" class="block text-sm font-medium text-gray-700"
+              >Profile author</label
+            >
+            <input
+              type="text"
+              name="author"
+              id="author"
+              minlength="1"
+              maxlength="100"
+              pattern="^[\p&#123;L&#125;\d\-.?_!| ]+$"
+              inputmode="text"
+              value={author}
+              placeholder="Example Company"
+              data-lpignore="true"
+              required
+              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
 
-            <!-- Profile ID prefix -->
-            <div>
-              <label
-                for="prefix"
-                class="block text-sm font-medium text-gray-700"
-                >Profile ID prefix</label
-              >
-              <input
-                type="text"
-                name="prefix"
-                id="prefix"
-                minlength="3"
-                maxlength="50"
-                pattern="^([a-z0-9\-._~%]+|\[[a-f0-9:.]+\])$"
-                inputmode="text"
-                value={idPrefix}
-                placeholder="example.com.config.vpn.ipsec"
-                data-lpignore="true"
-                required
-                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              />
-            </div>
+          <!-- Profile ID prefix -->
+          <div>
+            <label for="prefix" class="block text-sm font-medium text-gray-700"
+              >Profile ID prefix</label
+            >
+            <input
+              type="text"
+              name="prefix"
+              id="prefix"
+              minlength="3"
+              maxlength="50"
+              pattern="^([a-z0-9\-._~%]+|\[[a-f0-9:.]+\])$"
+              inputmode="text"
+              value={idPrefix}
+              placeholder="example.com.config.vpn.ipsec"
+              data-lpignore="true"
+              required
+              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
 
-            <!-- Upload PKCS #12 user certificate (.p12) -->
-            <!-- <div>
+          <!-- Upload PKCS #12 user certificate (.p12) -->
+          <!-- <div>
               <label
                 for="certificate"
                 class="block text-sm font-medium text-gray-700"
@@ -282,96 +269,96 @@
               </div>
             </div> -->
 
-            {#if authName && password}
-              <hr />
-              <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-                <p class="text-base font-normal text-gray-700">
-                  Add the following auto-generated credentials to your VPN
-                  service:
-                </p>
-              </div>
-              <div class="space-y-2">
-                <div class="flex items-center">
-                  <p class="text-sm font-medium text-gray-700 mr-auto">
-                    Identifier
-                  </p>
-                  <button
-                    on:click={() => navigator.clipboard.writeText(authName)}
-                    type="button"
-                    class="focus:ring-orange-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:rounded-sm"
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-6 w-6 text-orange-700 hover:text-orange-700 hover:scale-105 active:text-orange-300 active:scale-125 transition"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                <p class="text-sm font-mono text-orange-700">
-                  {authName}
-                </p>
-              </div>
-
-              <div class="space-y-2">
-                <div class="flex items-center">
-                  <p class="text-sm font-medium text-gray-700 mr-auto">
-                    Pre-Shared Key
-                  </p>
-                  <button
-                    on:click={() => navigator.clipboard.writeText(password)}
-                    type="button"
-                    class="focus:ring-orange-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:rounded-sm"
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-6 w-6 text-orange-700 hover:text-orange-700 hover:scale-105 active:text-orange-300 active:scale-125 transition"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
-                      />
-                    </svg>
-                  </button>
-                </div>
-
-                <p class="text-sm font-mono text-orange-700">
-                  {password}
-                </p>
-              </div>
-
-              <!-- Type -->
-              <div class="space-y-2">
-                <div class="flex items-center">
-                  <p class="text-sm font-medium text-gray-700 mr-auto">Type</p>
-                </div>
-                <p class="text-sm font-mono text-orange-700">EAP</p>
-              </div>
-            {/if}
-          </div>
-          <div
-            class="flex items-center justify-center space-x-4 px-4 py-4 bg-orange-50 text-right sm:px-6"
-          >
-            <div class="mr-auto">
-              <ResetButton on:resetform={resetForm} />
+          {#if authName && password}
+            <hr />
+            <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+              <p class="text-base font-normal text-gray-700">
+                Add the following auto-generated credentials to your VPN
+                service:
+              </p>
             </div>
-            <CopyUrlButton />
-            <DownloadButton />
-          </div>
+            <div class="space-y-2">
+              <div class="flex items-center">
+                <p class="text-sm font-medium text-gray-700 mr-auto">
+                  Identifier
+                </p>
+                <button
+                  on:click={() => navigator.clipboard.writeText(authName)}
+                  type="button"
+                  class="focus:ring-orange-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:rounded-sm"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 text-orange-700 hover:text-orange-700 hover:scale-105 active:text-orange-300 active:scale-125 transition"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <p class="text-sm font-mono text-orange-700">
+                {authName}
+              </p>
+            </div>
+
+            <div class="space-y-2">
+              <div class="flex items-center">
+                <p class="text-sm font-medium text-gray-700 mr-auto">
+                  Pre-Shared Key
+                </p>
+                <button
+                  on:click={() => navigator.clipboard.writeText(password)}
+                  type="button"
+                  class="focus:ring-orange-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:rounded-sm"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 text-orange-700 hover:text-orange-700 hover:scale-105 active:text-orange-300 active:scale-125 transition"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <p class="text-sm font-mono text-orange-700">
+                {password}
+              </p>
+            </div>
+
+            <!-- Type -->
+            <div class="space-y-2">
+              <div class="flex items-center">
+                <p class="text-sm font-medium text-gray-700 mr-auto">Type</p>
+              </div>
+              <p class="text-sm font-mono text-orange-700">EAP</p>
+            </div>
+          {/if}
         </div>
-      </form>
-      <Footer />
-    </div>
+        <div
+          class="flex items-center justify-center space-x-4 px-4 py-4 bg-orange-50 text-right sm:px-6"
+        >
+          <div class="mr-auto">
+            <ResetButton on:resetform={resetForm} />
+          </div>
+          <CopyUrlButton />
+          <DownloadButton />
+        </div>
+      </div>
+    </form>
   </div>
 </main>
+
+<Footer />

@@ -1,7 +1,7 @@
 <footer class="flex items-center justify-center">
   <a
     href="https://github.com/paulgalow/vorchard"
-    class="block pt-4 text-slate-600 hover:text-slate-700 dark:hover:text-slate-500"
+    class="block pt-4 pb-6 text-slate-600 hover:text-slate-700 dark:hover:text-slate-500"
     ><span class="sr-only">Vorchard on GitHub</span><svg
       viewBox="0 0 16 16"
       class="w-6 h-6"
