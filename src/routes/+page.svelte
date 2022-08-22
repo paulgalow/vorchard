@@ -286,10 +286,11 @@
                 <button
                   on:click={() => navigator.clipboard.writeText(authName)}
                   type="button"
+                  title="Copy identifier to clipboard"
                   class="focus:ring-orange-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:rounded-sm"
                   ><svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6 text-orange-700 hover:text-orange-700 hover:scale-105 active:text-orange-300 active:scale-125 transition"
+                    class="h-6 w-6 mb-1 text-orange-700 hover:text-orange-700 hover:scale-105 active:text-orange-300 active:scale-125 transition"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -303,7 +304,9 @@
                   </svg>
                 </button>
               </div>
-              <p class="text-sm font-mono text-orange-700">
+              <p
+                class="max-w-[22rem] sm:max-w-lg text-sm font-mono text-orange-700 leading-normal break-words"
+              >
                 {authName}
               </p>
             </div>
@@ -316,10 +319,11 @@
                 <button
                   on:click={() => navigator.clipboard.writeText(password)}
                   type="button"
+                  title="Copy pre-shared key to clipboard"
                   class="focus:ring-orange-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:rounded-sm"
                   ><svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6 text-orange-700 hover:text-orange-700 hover:scale-105 active:text-orange-300 active:scale-125 transition"
+                    class="h-6 w-6 mb-1 text-orange-700 hover:text-orange-700 hover:scale-105 active:text-orange-300 active:scale-125 transition"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -334,7 +338,9 @@
                 </button>
               </div>
 
-              <p class="text-sm font-mono text-orange-700">
+              <p
+                class="max-w-[22rem] sm:max-w-lg text-sm font-mono text-orange-700 leading-normal break-words"
+              >
                 {password}
               </p>
             </div>
