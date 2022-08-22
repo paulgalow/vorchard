@@ -1,7 +1,9 @@
-<footer class="flex items-center justify-center">
+<footer class="flex items-center justify-center pt-4 pb-6">
   <a
     href="https://github.com/paulgalow/vorchard"
-    class="block pt-4 pb-6 text-slate-600 hover:text-slate-700 dark:hover:text-slate-500"
+    title="Link to source code repository on GitHub"
+    aria-label="Link to source code repository on GitHub"
+    class="block text-slate-600 hover:text-slate-700 dark:hover:text-slate-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
     ><span class="sr-only">Vorchard on GitHub</span><svg
       viewBox="0 0 16 16"
       class="w-6 h-6"
