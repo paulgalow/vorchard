@@ -121,8 +121,9 @@
               id="username"
               minlength="3"
               maxlength="50"
-              pattern="^[a-z|\.]+$"
+              pattern="^[\w|\.-]+$"
               inputmode="text"
+              placeholder="e.g. firstname.lastname"
               data-lpignore="true"
               required
               class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
