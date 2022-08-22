@@ -103,7 +103,7 @@
 </svelte:head>
 
 <main class="flex justify-center">
-  <div class="sm:w-11/12 max-w-xl pt-8">
+  <div class="max-w-xl pt-8">
     <form on:submit|preventDefault={onSubmit} bind:this={formEl} method="post">
       <div class="shadow-md rounded-md overflow-hidden">
         <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
