@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import { downloadFile } from "$lib/utils/files";
   import { createAuthName, createPassword } from "$lib/utils/strings";
-  import Logo from "$lib/Logo.svelte";
+  import FormHeader from "$lib/FormHeader.svelte";
   import Footer from "$lib/Footer.svelte";
   import CopyUrlButton from "$lib/CopyUrlButton.svelte";
   import DownloadButton from "$lib/DownloadButton.svelte";
@@ -114,17 +114,7 @@
       >
         <div class="shadow-md rounded-md overflow-hidden">
           <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-            <div>
-              <div class="inline-flex justify-center items-center pt-1">
-                <Logo className="block h-10 w-10 mr-3" />
-                <h1 class="font-semibold text-3xl text-green-700">
-                  {SITE_NAME}
-                </h1>
-              </div>
-              <p class="font-normal text-base text-green-900 mt-1">
-                {SITE_DESCRIPTION}
-              </p>
-            </div>
+            <FormHeader {SITE_NAME} {SITE_DESCRIPTION} />
 
             <!-- Username -->
             <div>
