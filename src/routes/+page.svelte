@@ -305,7 +305,7 @@
                 </button>
               </div>
               <p
-                class="max-w-[22rem] sm:max-w-lg text-sm font-mono text-orange-700 leading-normal break-words"
+                class="max-w-xs sm:max-w-lg text-sm font-mono text-orange-700 leading-normal break-words"
               >
                 {authName}
               </p>
@@ -339,7 +339,7 @@
               </div>
 
               <p
-                class="max-w-[22rem] sm:max-w-lg text-sm font-mono text-orange-700 leading-normal break-words"
+                class="max-w-xs sm:max-w-lg text-sm font-mono text-orange-700 leading-normal break-words"
               >
                 {password}
               </p>
