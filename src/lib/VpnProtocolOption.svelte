@@ -4,8 +4,9 @@
 </script>
 
 <div class="w-1/2">
-  <label for="vpn-protocol" class="block text-sm font-medium text-gray-700"
-    >VPN protocol</label
+  <label
+    for="vpn-protocol"
+    class="block text-sm font-medium text-gray-700 truncate">VPN protocol</label
   >
   <select
     name="vpn-protocol"

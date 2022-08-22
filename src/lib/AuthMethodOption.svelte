@@ -4,7 +4,9 @@
 </script>
 
 <div class="w-1/2">
-  <label for="auth-method" class="block text-sm font-medium text-gray-700"
+  <label
+    for="auth-method"
+    class="block text-sm font-medium text-gray-700 truncate"
     >Authentication method</label
   >
   <select
