@@ -31,8 +31,8 @@
 
   // Initialize form state from query params if present
   const appParams = $page.url.searchParams;
-  let selectedVpnProtocol = appParams.get("proto") ?? "";
-  let selectedAuthMethod = appParams.get("auth") ?? "";
+  let selectedVpnProtocol = appParams.get("proto") ?? "ikev2";
+  let selectedAuthMethod = appParams.get("auth") ?? "eap-mschapv2";
   let connectionName = appParams.get("name") ?? "";
   let server = appParams.get("server") ?? "";
   let author = appParams.get("author") ?? "";
