@@ -12,15 +12,12 @@
   <select
     name="auth-method"
     id="auth-method"
+    bind:value={selectedAuthMethod}
     class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
   >
     {#each AUTH_METHODS as method}
-      {@const isSelectedAndSupported =
-        method.id === selectedAuthMethod && method.status === "supported"}
-      <option
-        value={method.id}
-        selected={isSelectedAndSupported}
-        disabled={method.status !== "supported"}>{method.name}</option
+      <option value={method.id} disabled={method.status !== "supported"}
+        >{method.name}</option
       >
     {/each}
   </select>

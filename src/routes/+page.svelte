@@ -16,7 +16,7 @@
     "Create VPN configuration profiles for iOS, iPadOS and macOS devices";
 
   const VPN_PROTOCOLS: VpnProtocol[] = [
-    { name: "IPSec IKEv2", id: "ikev2", status: "supported" },
+    { name: "IPsec IKEv2", id: "ikev2", status: "supported" },
     { name: "WireGuard", id: "wireguard", status: "unsupported" },
   ];
 
@@ -29,18 +29,49 @@
   let authName: string;
   let password: string;
 
+  // Initialize form state from query params if present
   const appParams = $page.url.searchParams;
-  const selectedVpnProtocol = appParams.get("proto") ?? "";
-  const selectedAuthMethod = appParams.get("auth") ?? "";
-  const connectionName = appParams.get("name") ?? "";
-  const server = appParams.get("server") ?? "";
-  const author = appParams.get("author") ?? "";
-  const idPrefix = appParams.get("prefix") ?? "";
+  let selectedVpnProtocol = appParams.get("proto") ?? "";
+  let selectedAuthMethod = appParams.get("auth") ?? "";
+  let connectionName = appParams.get("name") ?? "";
+  let server = appParams.get("server") ?? "";
+  let author = appParams.get("author") ?? "";
+  let idPrefix = appParams.get("prefix") ?? "";
 
   function resetForm() {
     formEl.reset();
     authName = "";
     password = "";
+    selectedVpnProtocol = "ikev2";
+    selectedAuthMethod = "eap-mschapv2";
+    connectionName = "";
+    server = "";
+    author = "";
+    idPrefix = "";
+  }
+
+  function copyUrl() {
+    const queryParamEntries = {
+      proto: selectedVpnProtocol,
+      auth: selectedAuthMethod,
+      name: connectionName,
+      server,
+      author,
+      prefix: idPrefix,
+    };
+
+    // Create new object containing all query params that have a truthy value
+    const filteredObject = Object.fromEntries(
+      Object.entries(queryParamEntries).filter(([key, value]) => value)
+    );
+    const params = new URLSearchParams(filteredObject);
+
+    const siteOrigin = $page.url.origin;
+    const pathname = $page.url.pathname;
+    // URLSearchParams encodes blank spaces with "+", instead of "%20"
+    const paramsString = params.toString().replaceAll("+", "%20");
+    const urlToShare = `${siteOrigin}${pathname}?${paramsString}`;
+    navigator.clipboard.writeText(urlToShare);
   }
 
   function onSubmit(e: SubmitEvent) {
@@ -131,8 +162,8 @@
           </div>
 
           <div class="flex items-center justify-between space-x-4 sm:space-x-7">
-            <VpnProtocolOption {VPN_PROTOCOLS} {selectedVpnProtocol} />
-            <AuthMethodOption {AUTH_METHODS} {selectedAuthMethod} />
+            <VpnProtocolOption {VPN_PROTOCOLS} bind:selectedVpnProtocol />
+            <AuthMethodOption {AUTH_METHODS} bind:selectedAuthMethod />
           </div>
 
           <!-- Connection Name -->
@@ -150,7 +181,7 @@
               maxlength="50"
               pattern="^[\p&#123;L&#125;| ]+$"
               inputmode="text"
-              value={connectionName}
+              bind:value={connectionName}
               data-lpignore="true"
               placeholder="Example Company VPN"
               required
@@ -171,7 +202,7 @@
               maxlength="50"
               pattern="^([a-z0-9\-._~%]+|\[[a-f0-9:.]+\])$"
               inputmode="text"
-              value={server}
+              bind:value={server}
               data-lpignore="true"
               placeholder="vpn.example.com"
               required
@@ -192,7 +223,7 @@
               maxlength="100"
               pattern="^[\p&#123;L&#125;\d\-.?_!| ]+$"
               inputmode="text"
-              value={author}
+              bind:value={author}
               placeholder="Example Company"
               data-lpignore="true"
               required
@@ -213,7 +244,7 @@
               maxlength="50"
               pattern="^([a-z0-9\-._~%]+|\[[a-f0-9:.]+\])$"
               inputmode="text"
-              value={idPrefix}
+              bind:value={idPrefix}
               placeholder="example.com.config.vpn.ipsec"
               data-lpignore="true"
               required
@@ -360,7 +391,7 @@
           <div class="mr-auto">
             <ResetButton on:resetform={resetForm} />
           </div>
-          <CopyUrlButton />
+          <CopyUrlButton on:copyurl={copyUrl} />
           <DownloadButton />
         </div>
       </div>

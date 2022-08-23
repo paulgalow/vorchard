@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   export let title = "Copy URL";
+  const dispatch = createEventDispatcher();
 </script>
 
 <button
-  on:click={() => window.location.reload()}
+  on:click={() => dispatch("copyurl")}
   type="button"
   class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
   {title}
