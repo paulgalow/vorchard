@@ -128,7 +128,7 @@ const renderTemplate = (username: string, certBundlePassword: string, userCertif
     <key>PayloadDescription</key>
     <string>VPN access for ${username}</string>
     <key>PayloadDisplayName</key>
-    <string>VPN IPSec</string>
+    <string>VPN IPsec</string>
     <key>PayloadIdentifier</key>
     <string>${id}.${username}.${createUuid()}</string>
     <key>PayloadOrganization</key>
