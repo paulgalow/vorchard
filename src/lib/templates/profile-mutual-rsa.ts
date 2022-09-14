@@ -4,7 +4,7 @@ const formatString = (str: string, indentSpaces: number) =>
   str.match(/.{1,70}/g)?.join("\n" + " ".repeat(indentSpaces));
 
 // prettier-ignore
-const renderTemplate = (username: string, certBundlePassword: string, userCertificate: string, server: string, connectionName: string, author: string, id: string) => {
+const renderTemplate = (username: string, certBundlePassword: string, userCertificate: string, server: string, connectionName: string, caCommonName: string, author: string, id: string) => {
   const userCertPayloadUuid = createUuid();
   const ikeV2PayloadUuid = createUuid();
   const formattedCertString = formatString(userCertificate, 10);
@@ -67,7 +67,7 @@ const renderTemplate = (username: string, certBundlePassword: string, userCertif
           <key>RemoteIdentifier</key>
           <string>${server}</string>
           <key>ServerCertificateIssuerCommonName</key>
-          <string>ca.example.com</string>
+          <string>${caCommonName}</string>
           <key>UseConfigurationAttributeInternalIPSubnet</key>
           <integer>0</integer>
         </dict>
@@ -108,13 +108,13 @@ const renderTemplate = (username: string, certBundlePassword: string, userCertif
       </dict>
       <dict>
         <key>PayloadCertificateFileName</key>
-        <string>ca.example.com.crt</string>
+        <string>${caCommonName}.crt</string>
         <key>PayloadContent</key>
         <data>BASE64-DATA-HERE</data>
         <key>PayloadDescription</key>
         <string>Example VPN CA certificate</string>
         <key>PayloadDisplayName</key>
-        <string>ca.example.com</string>
+        <string>${caCommonName}</string>
         <key>PayloadIdentifier</key>
         <string>com.apple.security.root.f224dfd9-1efb-4aa1-a0b0-ff55124aa3df</string>
         <key>PayloadType</key>
@@ -146,4 +146,4 @@ const renderTemplate = (username: string, certBundlePassword: string, userCertif
 `.trimStart();
 }
 
-export default renderTemplate;
+export { renderTemplate };

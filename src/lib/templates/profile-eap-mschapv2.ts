@@ -103,4 +103,4 @@ const renderTemplate = (username: string, authName: string, authPassword: string
 `.trimStart();
 }
 
-export default renderTemplate;
+export { renderTemplate };

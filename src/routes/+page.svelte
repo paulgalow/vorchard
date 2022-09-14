@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { downloadFile } from "$lib/utils/files";
+  import { downloadFile, readFile } from "$lib/utils/files";
   import { createAuthName, createPassword } from "$lib/utils/strings";
   import FormHeader from "$lib/FormHeader.svelte";
   import Footer from "$lib/Footer.svelte";
@@ -9,7 +9,9 @@
   import ResetButton from "$lib/ResetButton.svelte";
   import VpnProtocolOption from "$lib/VpnProtocolOption.svelte";
   import AuthMethodOption from "$lib/AuthMethodOption.svelte";
-  import renderTemplate from "$lib/templates/profile-eap-mschapv2";
+  import UploadFileInput from "$lib/UploadFileInput.svelte";
+  import { renderTemplate as renderTemplateEap } from "$lib/templates/profile-eap-mschapv2";
+  import { renderTemplate as renderTemplateMutualRsa } from "$lib/templates/profile-mutual-rsa";
 
   const SITE_NAME = "Vorchard";
   const SITE_DESCRIPTION =
@@ -22,12 +24,13 @@
 
   const AUTH_METHODS: AuthMethod[] = [
     { name: "EAP-MSCHAPv2", id: "eap-mschapv2", status: "supported" },
-    { name: "Mutual RSA", id: "mutual-rsa", status: "unsupported" },
+    { name: "Mutual RSA", id: "mutual-rsa", status: "supported" },
   ];
 
   let formEl: HTMLFormElement;
   let authName: string;
   let password: string;
+  let certBundle: FormDataEntryValue | null;
 
   // Initialize form state from query params if present
   const appParams = $page.url.searchParams;
@@ -48,6 +51,7 @@
     server = "";
     author = "";
     idPrefix = "";
+    certBundle = null;
   }
 
   function copyUrl() {
@@ -74,7 +78,7 @@
     navigator.clipboard.writeText(urlToShare);
   }
 
-  function onSubmit(e: SubmitEvent) {
+  async function onSubmit(e: SubmitEvent) {
     const formData = new FormData(<HTMLFormElement>e.target);
 
     const username = formData.get("username");
@@ -92,41 +96,54 @@
     const idPrefix = formData.get("prefix");
     if (idPrefix instanceof File || idPrefix == null) return;
 
-    authName = createAuthName(username);
-    password = createPassword({});
+    switch (selectedVpnProtocol) {
+      case "ikev2":
+        if (selectedAuthMethod === "eap-mschapv2") {
+          authName = createAuthName(username);
+          password = createPassword({});
 
-    const configProfile = renderTemplate(
-      username,
-      authName,
-      password,
-      server,
-      connectionName,
-      author,
-      idPrefix
-    );
+          const configProfile = renderTemplateEap(
+            username,
+            authName,
+            password,
+            server,
+            connectionName,
+            author,
+            idPrefix
+          );
+          downloadFile(configProfile, username);
+        } else if (selectedAuthMethod === "mutual-rsa") {
+          const caCommonName = formData.get("cacommonname");
+          if (caCommonName instanceof File || caCommonName == null) return;
 
-    downloadFile(configProfile, username);
+          const certBundlePassword = formData.get("certbundlepassword");
+          if (certBundlePassword instanceof File || certBundlePassword == null)
+            return;
+
+          certBundle = formData.get("certbundle");
+          if (certBundle instanceof File) {
+            const certificate = await readFile(certBundle);
+            const certificateB64 = window.btoa(certificate);
+
+            const configProfile = renderTemplateMutualRsa(
+              username,
+              certBundlePassword,
+              certificateB64,
+              server,
+              caCommonName,
+              connectionName,
+              author,
+              idPrefix
+            );
+            downloadFile(configProfile, username);
+          }
+        }
+        break;
+
+      default:
+        break;
+    }
   }
-  // async function onSubmit(e: SubmitEvent) {
-  //   const formData = new FormData(<HTMLFormElement>e.target);
-
-  //   const username = formData.get("username");
-  //   const file = formData.get("file-upload");
-
-  //   if (!username || !file) return;
-
-  //   if (file instanceof File && !(username instanceof File)) {
-  //     const certificate = await readFile(file);
-  //     const certificateB64 = window.btoa(certificate);
-  //     const configProfile = renderTemplate(
-  //       username.trim(),
-  //       password,
-  //       certificateB64
-  //     );
-  //     downloadFile(configProfile, username);
-  //   }
-
-  // }
 </script>
 
 <svelte:head>
@@ -210,6 +227,57 @@
             />
           </div>
 
+          {#if selectedAuthMethod === "mutual-rsa"}
+            <!-- CA common name -->
+            <div>
+              <label
+                for="cacommonname"
+                class="block text-sm font-medium text-gray-700"
+                >Server certificate authority common name</label
+              >
+              <input
+                type="text"
+                name="cacommonname"
+                id="cacommonname"
+                minlength="1"
+                maxlength="200"
+                pattern="^[\w|\.-]+$"
+                inputmode="text"
+                placeholder="ca.example.com"
+                data-lpignore="true"
+                required
+                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+            <UploadFileInput
+              title="User certificate"
+              name="certbundle"
+              mimeType="application/x-pkcs12"
+              description="PKCS #12 certificate bundle (.p12)"
+            />
+            <!-- Certificate bundle password -->
+            <div>
+              <label
+                for="certbundlepassword"
+                class="block text-sm font-medium text-gray-700"
+                >Certificate bundle password</label
+              >
+              <input
+                type="password"
+                name="certbundlepassword"
+                id="certbundlepassword"
+                minlength="1"
+                maxlength="200"
+                pattern="^[\w|\.-]+$"
+                inputmode="text"
+                placeholder="my-certificate-bundle-password-here"
+                data-lpignore="true"
+                required
+                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+          {/if}
+
           <!-- Profile author -->
           <div>
             <label for="author" class="block text-sm font-medium text-gray-700"
@@ -251,55 +319,6 @@
               class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             />
           </div>
-
-          <!-- Upload PKCS #12 user certificate (.p12) -->
-          <!-- <div>
-              <label
-                for="certificate"
-                class="block text-sm font-medium text-gray-700"
-              >
-                User certificate
-              </label>
-              <div
-                class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
-              >
-                <div class="space-y-1 text-center">
-                  <svg
-                    class="mx-auto h-12 w-12 text-gray-400"
-                    stroke="currentColor"
-                    fill="none"
-                    viewBox="0 0 48 48"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                  <div class="flex text-sm text-gray-600">
-                    <label
-                      for="file-upload"
-                      class="relative cursor-pointer bg-white rounded-md font-medium text-orange-600 hover:text-orange-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-orange-500"
-                    >
-                      <span>Upload a file</span>
-                      <input
-                        id="file-upload"
-                        name="file-upload"
-                        type="file"
-                        accept="application/x-pkcs12"
-                        class="sr-only"
-                      />
-                    </label>
-                    <p class="pl-1">or drag and drop</p>
-                  </div>
-                  <p class="text-xs text-gray-500">
-                    PKCS #12 certificate bundle (.p12)
-                  </p>
-                </div>
-              </div>
-            </div> -->
 
           {#if authName && password}
             <hr />
