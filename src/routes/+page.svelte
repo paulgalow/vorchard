@@ -38,6 +38,7 @@
   let selectedAuthMethod = appParams.get("auth") ?? "eap-mschapv2";
   let connectionName = appParams.get("name") ?? "";
   let server = appParams.get("server") ?? "";
+  let caCommonName = appParams.get("cacommonname") ?? "";
   let author = appParams.get("author") ?? "";
   let idPrefix = appParams.get("prefix") ?? "";
 
@@ -49,6 +50,7 @@
     selectedAuthMethod = "eap-mschapv2";
     connectionName = "";
     server = "";
+    caCommonName = "";
     author = "";
     idPrefix = "";
     certBundle = null;
@@ -60,6 +62,7 @@
       auth: selectedAuthMethod,
       name: connectionName,
       server,
+      cacommonname: caCommonName,
       author,
       prefix: idPrefix,
     };
@@ -243,6 +246,7 @@
                 maxlength="200"
                 pattern="^[\w|\.-]+$"
                 inputmode="text"
+                bind:value={caCommonName}
                 placeholder="ca.example.com"
                 data-lpignore="true"
                 required
