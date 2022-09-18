@@ -42,6 +42,7 @@
             type="file"
             accept={mimeType}
             class="sr-only"
+            required
           />
         </label>
         <p class="pl-1">or drag and drop</p>
