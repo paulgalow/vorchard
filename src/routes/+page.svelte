@@ -287,7 +287,7 @@
               />
             </div>
             <UploadFileInput
-              title="Certificate authority certificate"
+              title="Certificate authority root certificate"
               name="cacert"
               mimeType="application/x-x509-ca-cert"
               description="Certificate file (.crt)"
