@@ -4,10 +4,12 @@ const formatString = (str: string, indentSpaces: number) =>
   str.match(/.{1,70}/g)?.join("\n" + " ".repeat(indentSpaces));
 
 // prettier-ignore
-const renderTemplate = (username: string, certBundlePassword: string, userCertificate: string, server: string, connectionName: string, caCommonName: string, author: string, id: string) => {
+const renderTemplate = (username: string, certBundlePassword: string, userCertificate: string, caCertificate: string, server: string, connectionName: string, caCommonName: string, author: string, id: string) => {
   const userCertPayloadUuid = createUuid();
   const ikeV2PayloadUuid = createUuid();
-  const formattedCertString = formatString(userCertificate, 10);
+  const caCertificateUuid = createUuid();
+  const formattedUserCertString = formatString(userCertificate, 10);
+  const formattedCaCertString = formatString(caCertificate, 10);
 
   return `
 <?xml version="1.0" encoding="UTF-8"?>
@@ -91,7 +93,7 @@ const renderTemplate = (username: string, certBundlePassword: string, userCertif
         <string>${username}.p12</string>
         <key>PayloadContent</key>
         <data>
-          ${formattedCertString}
+          ${formattedUserCertString}
         </data>
         <key>PayloadDescription</key>
         <string>PKCS#12 bundle including user certificate, user key and ca certificate</string>
@@ -110,17 +112,19 @@ const renderTemplate = (username: string, certBundlePassword: string, userCertif
         <key>PayloadCertificateFileName</key>
         <string>${caCommonName}.crt</string>
         <key>PayloadContent</key>
-        <data>BASE64-DATA-HERE</data>
+        <data>
+          ${formattedCaCertString}
+        </data>
         <key>PayloadDescription</key>
-        <string>Example VPN CA certificate</string>
+        <string>${caCommonName} CA certificate</string>
         <key>PayloadDisplayName</key>
         <string>${caCommonName}</string>
         <key>PayloadIdentifier</key>
-        <string>com.apple.security.root.f224dfd9-1efb-4aa1-a0b0-ff55124aa3df</string>
+        <string>com.apple.security.root.${caCertificateUuid}</string>
         <key>PayloadType</key>
         <string>com.apple.security.root</string>
         <key>PayloadUUID</key>
-        <string>f224dfd9-1efb-4aa1-a0b0-ff55124aa3df</string>
+        <string>${caCertificateUuid}</string>
         <key>PayloadVersion</key>
         <integer>1</integer>
       </dict>

@@ -31,6 +31,7 @@
   let authName: string;
   let password: string;
   let certBundle: FormDataEntryValue | null;
+  let caCert: FormDataEntryValue | null;
 
   // Initialize form state from query params if present
   const appParams = $page.url.searchParams;
@@ -54,6 +55,7 @@
     author = "";
     idPrefix = "";
     certBundle = null;
+    caCert = null;
   }
 
   function copyUrl() {
@@ -124,17 +126,21 @@
             return;
 
           certBundle = formData.get("certbundle");
-          if (certBundle instanceof File) {
-            const certificate = await readFile(certBundle);
-            const certificateB64 = window.btoa(certificate);
+          caCert = formData.get("cacert");
+          if (certBundle instanceof File && caCert instanceof File) {
+            const certBundleData = await readFile(certBundle);
+            const caCertData = await readFile(caCert);
+            const certBundleB64 = window.btoa(certBundleData);
+            const caCertB64 = window.btoa(caCertData);
 
             const configProfile = renderTemplateMutualRsa(
               username,
               certBundlePassword,
-              certificateB64,
+              certBundleB64,
+              caCertB64,
               server,
-              caCommonName,
               connectionName,
+              caCommonName,
               author,
               idPrefix
             );
@@ -280,6 +286,12 @@
                 class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               />
             </div>
+            <UploadFileInput
+              title="Certificate authority certificate"
+              name="cacert"
+              mimeType="application/x-x509-ca-cert"
+              description="Certificate file (.crt)"
+            />
           {/if}
 
           <!-- Profile author -->
