@@ -3,13 +3,21 @@
   import { downloadFile, readFile } from "$lib/utils/files";
   import { createAuthName, createPassword } from "$lib/utils/strings";
   import FormHeader from "$lib/FormHeader.svelte";
-  import Footer from "$lib/Footer.svelte";
-  import CopyUrlButton from "$lib/CopyUrlButton.svelte";
-  import DownloadButton from "$lib/DownloadButton.svelte";
-  import ResetButton from "$lib/ResetButton.svelte";
+  import Username from "$lib/UsernameInput.svelte";
   import VpnProtocolOption from "$lib/VpnProtocolOption.svelte";
   import AuthMethodOption from "$lib/AuthMethodOption.svelte";
-  import UploadFileInput from "$lib/UploadFileInput.svelte";
+  import ConnectionName from "$lib/ConnectionNameInput.svelte";
+  import ServerHost from "$lib/ServerHostInput.svelte";
+  import CaCommonName from "$lib/CaCommonNameInput.svelte";
+  import CertBundlePassword from "$lib/CertBundlePasswordInput.svelte";
+  import ProfileAuthor from "$lib/ProfileAuthorInput.svelte";
+  import ProfileIdPrefix from "$lib/ProfileIdPrefixInput.svelte";
+  import UploadFile from "$lib/UploadFileInput.svelte";
+  import ResetButton from "$lib/ResetButton.svelte";
+  import CopyUrlButton from "$lib/CopyUrlButton.svelte";
+  import DownloadButton from "$lib/DownloadButton.svelte";
+  import GeneratedCredentials from "$lib/GeneratedCredentials.svelte";
+  import Footer from "$lib/Footer.svelte";
   import { renderTemplate as renderTemplateEap } from "$lib/templates/profile-eap-mschapv2";
   import { renderTemplate as renderTemplateMutualRsa } from "$lib/templates/profile-mutual-rsa";
 
@@ -166,127 +174,27 @@
         <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
           <FormHeader {SITE_NAME} {SITE_DESCRIPTION} />
 
-          <!-- Username -->
-          <div>
-            <label
-              for="username"
-              class="block text-sm font-medium text-gray-700">Username</label
-            >
-            <input
-              type="text"
-              name="username"
-              id="username"
-              minlength="3"
-              maxlength="50"
-              pattern="^[\w|\.-]+$"
-              inputmode="text"
-              placeholder="e.g. firstname.lastname"
-              data-lpignore="true"
-              required
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-            />
-          </div>
+          <Username />
 
           <div class="flex items-center justify-between space-x-2 sm:space-x-7">
             <VpnProtocolOption {VPN_PROTOCOLS} bind:selectedVpnProtocol />
             <AuthMethodOption {AUTH_METHODS} bind:selectedAuthMethod />
           </div>
 
-          <!-- Connection Name -->
-          <div>
-            <label
-              for="connection-name"
-              class="block text-sm font-medium text-gray-700"
-              >Connection name</label
-            >
-            <input
-              type="text"
-              name="connection-name"
-              id="connection-name"
-              minlength="1"
-              maxlength="50"
-              pattern="^[\p&#123;L&#125;| ]+$"
-              inputmode="text"
-              bind:value={connectionName}
-              data-lpignore="true"
-              placeholder="Example Company VPN"
-              required
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-            />
-          </div>
-
-          <!-- Server -->
-          <div>
-            <label for="server" class="block text-sm font-medium text-gray-700"
-              >Server host</label
-            >
-            <input
-              type="text"
-              name="server"
-              id="server"
-              minlength="3"
-              maxlength="50"
-              pattern="^([a-z0-9\-._~%]+|\[[a-f0-9:.]+\])$"
-              inputmode="text"
-              bind:value={server}
-              data-lpignore="true"
-              placeholder="vpn.example.com"
-              required
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-            />
-          </div>
+          <ConnectionName bind:connectionName />
+          <ServerHost bind:server />
 
           {#if selectedAuthMethod === "mutual-rsa"}
-            <!-- CA common name -->
-            <div>
-              <label
-                for="cacommonname"
-                class="block text-sm font-medium text-gray-700"
-                >Server certificate authority common name</label
-              >
-              <input
-                type="text"
-                name="cacommonname"
-                id="cacommonname"
-                minlength="1"
-                maxlength="200"
-                pattern="^[\w|\.-]+$"
-                inputmode="text"
-                bind:value={caCommonName}
-                placeholder="ca.example.com"
-                data-lpignore="true"
-                required
-                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              />
-            </div>
-            <UploadFileInput
+            <CaCommonName bind:caCommonName />
+            <UploadFile
               title="User certificate"
               name="certbundle"
               mimeType="application/x-pkcs12"
               description="PKCS #12 certificate bundle (.p12)"
             />
-            <!-- Certificate bundle password -->
-            <div>
-              <label
-                for="certbundlepassword"
-                class="block text-sm font-medium text-gray-700"
-                >Certificate bundle password</label
-              >
-              <input
-                type="password"
-                name="certbundlepassword"
-                id="certbundlepassword"
-                minlength="1"
-                maxlength="200"
-                pattern="^[\w|\.-]+$"
-                inputmode="text"
-                placeholder="my-certificate-bundle-password-here"
-                data-lpignore="true"
-                required
-                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              />
-            </div>
-            <UploadFileInput
+
+            <CertBundlePassword />
+            <UploadFile
               title="Certificate authority root certificate"
               name="cacert"
               mimeType="application/x-x509-ca-cert"
@@ -294,132 +202,15 @@
             />
           {/if}
 
-          <!-- Profile author -->
-          <div>
-            <label for="author" class="block text-sm font-medium text-gray-700"
-              >Profile author</label
-            >
-            <input
-              type="text"
-              name="author"
-              id="author"
-              minlength="1"
-              maxlength="100"
-              pattern="^[\p&#123;L&#125;\d\-.?_!| ]+$"
-              inputmode="text"
-              bind:value={author}
-              placeholder="Example Company"
-              data-lpignore="true"
-              required
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-            />
-          </div>
-
-          <!-- Profile ID prefix -->
-          <div>
-            <label for="prefix" class="block text-sm font-medium text-gray-700"
-              >Profile ID prefix</label
-            >
-            <input
-              type="text"
-              name="prefix"
-              id="prefix"
-              minlength="3"
-              maxlength="50"
-              pattern="^([a-z0-9\-._~%]+|\[[a-f0-9:.]+\])$"
-              inputmode="text"
-              bind:value={idPrefix}
-              placeholder="example.com.config.vpn.ipsec"
-              data-lpignore="true"
-              required
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-            />
-          </div>
+          <ProfileAuthor bind:author />
+          <ProfileIdPrefix bind:idPrefix />
 
           {#if authName && password}
             <hr />
-            <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-              <p class="text-base font-normal text-gray-700">
-                Add the following auto-generated credentials to your VPN
-                service:
-              </p>
-            </div>
-            <div class="space-y-2">
-              <div class="flex items-center">
-                <p class="text-sm font-medium text-gray-700 mr-auto">
-                  Identifier
-                </p>
-                <button
-                  on:click={() => navigator.clipboard.writeText(authName)}
-                  type="button"
-                  title="Copy identifier to clipboard"
-                  class="focus:ring-orange-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:rounded-sm"
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6 mb-1 text-orange-700 hover:text-orange-700 hover:scale-105 active:text-orange-300 active:scale-125 transition"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <p
-                class="max-w-xs sm:max-w-lg text-sm font-mono text-orange-700 leading-normal break-words"
-              >
-                {authName}
-              </p>
-            </div>
-
-            <div class="space-y-2">
-              <div class="flex items-center">
-                <p class="text-sm font-medium text-gray-700 mr-auto">
-                  Pre-Shared Key
-                </p>
-                <button
-                  on:click={() => navigator.clipboard.writeText(password)}
-                  type="button"
-                  title="Copy pre-shared key to clipboard"
-                  class="focus:ring-orange-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:rounded-sm"
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6 mb-1 text-orange-700 hover:text-orange-700 hover:scale-105 active:text-orange-300 active:scale-125 transition"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
-                    />
-                  </svg>
-                </button>
-              </div>
-
-              <p
-                class="max-w-xs sm:max-w-lg text-sm font-mono text-orange-700 leading-normal break-words"
-              >
-                {password}
-              </p>
-            </div>
-
-            <!-- Type -->
-            <div class="space-y-2">
-              <div class="flex items-center">
-                <p class="text-sm font-medium text-gray-700 mr-auto">Type</p>
-              </div>
-              <p class="text-sm font-mono text-orange-700">EAP</p>
-            </div>
+            <GeneratedCredentials {authName} {password} />
           {/if}
         </div>
+
         <div
           class="flex items-center justify-center space-x-4 px-4 py-4 bg-orange-50 text-right sm:px-6"
         >
