@@ -187,7 +187,7 @@
             />
           </div>
 
-          <div class="flex items-center justify-between space-x-4 sm:space-x-7">
+          <div class="flex items-center justify-between space-x-2 sm:space-x-7">
             <VpnProtocolOption {VPN_PROTOCOLS} bind:selectedVpnProtocol />
             <AuthMethodOption {AUTH_METHODS} bind:selectedAuthMethod />
           </div>
