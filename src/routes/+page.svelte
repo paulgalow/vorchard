@@ -133,8 +133,8 @@
           if (certBundlePassword instanceof File || certBundlePassword == null)
             return;
 
-          certBundle = formData.get("certbundle");
-          caCert = formData.get("cacert");
+          certBundle = certBundle ?? formData.get("certbundle");
+          caCert = caCert ?? formData.get("cacert");
           if (certBundle instanceof File && caCert instanceof File) {
             const certBundleData = await readFile(certBundle);
             const caCertData = await readFile(caCert);
@@ -191,6 +191,7 @@
               name="certbundle"
               mimeType="application/x-pkcs12"
               description="PKCS #12 certificate bundle (.p12)"
+              bind:file={certBundle}
             />
 
             <CertBundlePassword />
@@ -199,6 +200,7 @@
               name="cacert"
               mimeType="application/x-x509-ca-cert"
               description="Certificate file (.crt)"
+              bind:file={caCert}
             />
           {/if}
 
