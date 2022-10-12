@@ -20,9 +20,9 @@ You can't. However, no data is sent to any server. Everything runs locally in yo
 
 ### Why can't I enter a password for my username?
 
-I needed a way to quickly generate lots of passwords. Vorchard automatically generates a long random password for you using the browser's [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API).
+I needed a way to quickly generate lots of passwords. Vorchard automatically generates a long random password for you using the browser's [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Crypto).
 
-### Why add random digits to a username?
+### Why add random characters to a username?
 
 This aims to make it harder for an attacker to guess your username.
 
