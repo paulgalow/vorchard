@@ -16,7 +16,7 @@ const config = {
     }),
     csp: {
       directives: {
-        "default-src": ["self"],
+        "default-src": ["none"],
         "script-src": ["strict-dynamic"],
         "img-src": ["self", "data:"],
         "style-src": ["self", "unsafe-inline"], // "unsafe-inline" workaround for https://github.com/sveltejs/kit/issues/5215
@@ -24,6 +24,7 @@ const config = {
         "connect-src": ["self"],
         "prefetch-src": ["self"],
         "form-action": ["self"],
+        "manifest-src": ["self"],
         "base-uri": ["none"],
         "frame-ancestors": ["none"],
         "media-src": ["none"],
