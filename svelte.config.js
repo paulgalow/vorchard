@@ -14,6 +14,20 @@ const config = {
       external: [],
       split: false,
     }),
+    csp: {
+      directives: {
+        "default-src": ["self"],
+        "script-src": ["self"],
+        "style-src": ["self"],
+        "img-src": ["self", "data:"],
+        "font-src": ["self"],
+        "connect-src": ["self"],
+        "media-src": ["none"],
+        "object-src": ["none"],
+        "prefetch-src": ["self"],
+        "frame-ancestors": ["none"],
+      },
+    },
   },
 };
 
