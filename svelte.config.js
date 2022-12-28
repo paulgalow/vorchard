@@ -21,7 +21,7 @@ const config = {
         "img-src": ["self", "data:"],
         "style-src": ["self", "unsafe-inline"], // "unsafe-inline" workaround for https://github.com/sveltejs/kit/issues/5215
         "font-src": ["self"],
-        "connect-src": ["self", "ws://*"],
+        "connect-src": ["self"],
         "prefetch-src": ["self"],
         "form-action": ["self"],
         "base-uri": ["none"],
