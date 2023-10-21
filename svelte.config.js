@@ -29,7 +29,7 @@ const config = {
         "media-src": ["none"],
         "object-src": ["none"],
         "worker-src": ["none"],
-        "require-trusted-types-for": ["'script'"],
+        // "require-trusted-types-for": ["'script'"],
       },
     },
   },
