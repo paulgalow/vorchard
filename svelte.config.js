@@ -22,7 +22,6 @@ const config = {
         "style-src": ["self", "unsafe-inline"], // "unsafe-inline" workaround for https://github.com/sveltejs/kit/issues/5215
         "font-src": ["self"],
         "connect-src": ["self"],
-        "prefetch-src": ["self"],
         "form-action": ["self"],
         "manifest-src": ["self"],
         "base-uri": ["none"],
