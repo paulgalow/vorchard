@@ -12,7 +12,7 @@
     id="cacommonname"
     minlength="1"
     maxlength="200"
-    pattern="^[\w|\.-]+$"
+    pattern="^[\w\.-]*$"
     inputmode="text"
     bind:value={caCommonName}
     placeholder="ca.example.com"

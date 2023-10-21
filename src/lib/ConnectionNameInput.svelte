@@ -12,7 +12,7 @@
     id="connection-name"
     minlength="1"
     maxlength="50"
-    pattern="^[\p&#123;L&#125;| ']+$"
+    pattern="^[\p&lbrace;L&rbrace;\s]*$"
     inputmode="text"
     bind:value={connectionName}
     data-lpignore="true"

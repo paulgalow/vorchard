@@ -8,7 +8,7 @@
     id="username"
     minlength="3"
     maxlength="50"
-    pattern="^[\w|\.-]+$"
+    pattern="^[\w\.-]*$"
     inputmode="text"
     placeholder="e.g. firstname.lastname"
     data-lpignore="true"
