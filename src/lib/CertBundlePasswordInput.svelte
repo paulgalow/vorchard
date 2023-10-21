@@ -10,7 +10,7 @@
     id="certbundlepassword"
     minlength="1"
     maxlength="200"
-    pattern="^[\w\.-]*$"
+    pattern="[\w.-]*"
     inputmode="text"
     placeholder="my-certificate-bundle-password-here"
     data-lpignore="true"

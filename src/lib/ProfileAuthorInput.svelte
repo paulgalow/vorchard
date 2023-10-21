@@ -12,7 +12,7 @@
     id="author"
     minlength="1"
     maxlength="100"
-    pattern="^[\p&lbraceL&rbrace\d\-.?_!\s]*$"
+    pattern={`^[\\p{L}\\d\\-.?_!\\s]*$`}
     inputmode="text"
     bind:value={author}
     placeholder="Example Company"
